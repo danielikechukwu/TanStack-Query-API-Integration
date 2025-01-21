@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Posts from "./components/Posts";
 
 export interface IData {
   userId: number,
@@ -9,7 +11,9 @@ export interface IData {
   body: string
 }
 
-function App() {
+const App: () => JSX.Element = () => {
+
+  const queryClient: QueryClient = new QueryClient();
 
   const [data, setData] = useState([]);
 
@@ -34,27 +38,11 @@ function App() {
 
   }, []);
 
-  if (loading) {
-
-    return <p>Loading...</p>;
-    
-  }
-
   return (
 
-    <div>
-
-      <h2>Returned data</h2>
-
-      <ul>
-
-        {data.map((item: IData) => (
-          <li key={item.id}>{item.title}</li>
-        ))}
-
-      </ul>
-
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <Posts />
+    </QueryClientProvider>
 
   );
 }
