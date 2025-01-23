@@ -1,13 +1,19 @@
 import { useTodosIds } from "../services/todo.queries"
 
-const Todos = () => {
+export default function Todos() {
 
     const todosIdQuery = useTodosIds();
 
-  return (
-    <div>Todos</div>
-  )
+    if (todosIdQuery.isPending) {
+        return <span>Loading...</span>
+    }
+
+    if (todosIdQuery.error) {
+        return <span>An error occurred</span>
+    }
+
+    console.log(todosIdQuery.data);
+
+
 
 }
-
-export default Todos
