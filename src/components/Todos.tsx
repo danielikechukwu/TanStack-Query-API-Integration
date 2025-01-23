@@ -4,6 +4,11 @@ import { useIsFetching } from "@tanstack/react-query";
 
 export default function Todos() {
 
+    const style = {
+        border: "1px solid red",
+        marginBottom: "23px"
+    }
+
     const todosIdQuery = useTodosIds();
 
     const todosQueries = useTodos(todosIdQuery.data);
@@ -35,7 +40,7 @@ export default function Todos() {
             <ul>
 
                 {todosQueries.map(({ data }) => (
-                    <li key={data?.id}>
+                    <li key={data?.id} style={style}>
                         <span>
                             <strong>Id: </strong> {data?.id}, {" "}
                             <strong>Title: </strong> {data?.title}, {" "}
