@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query"
-import { getTodosIds } from "./todo.service"
+import { useQueries, useQuery } from "@tanstack/react-query"
+import { getTodo, getTodosIds } from "./todo.service"
 
 export const useTodosIds = () => {
 
@@ -7,4 +7,18 @@ export const useTodosIds = () => {
         queryKey: ["todos"],
         queryFn: getTodosIds
     })
+}
+
+export const useTodos = (ids: (number | undefined)[] | undefined) => {
+
+    return useQueries({
+        queries: (ids ?? []).map((id) => {
+
+            return {
+                queryKey: ["todo", id],
+                queryFn: () => getTodo(id!)
+            }
+        })
+    })
+
 }
