@@ -12,3 +12,9 @@ export const getTodo = async (id: number): Promise<ITodo> => {
     return (await api.get<ITodo>(`todos/${id}`)).data;
 
 }
+
+export const createTodo = async (data: ITodo): Promise<void> => {
+
+    await api.post("todos", data);
+
+}
