@@ -1,3 +1,4 @@
+import { IProduct } from "../interface/product";
 import { ITodo } from "../interface/todo"
 import api from "./api"
 
@@ -28,5 +29,11 @@ export const updateTodo = async (data: ITodo): Promise<void> => {
 export const deleteTodo = async (id: number) => {
 
     await api.delete(`todos/${id}`);
+
+}
+
+export const getProducts = async ({ pageParam } : { pageParam: number }) => {
+
+    return (await api.get<IProduct[]>(`products?_page=${pageParam + 1}&_limit=3`)).data;
 
 }

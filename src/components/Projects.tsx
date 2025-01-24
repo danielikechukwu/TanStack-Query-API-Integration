@@ -8,8 +8,6 @@ const Projects = () => {
 
     const projects = useProjects(page);
 
-    console.log(projects.isPlaceholderData);
-
     return (
         <div>
 

@@ -1,7 +1,8 @@
 import { Fragment } from "react";
 import "./App.css";
-import Todos from "./components/Todos";
-import Projects from "./components/Projects";
+import Product from "./components/Product";
+// import Todos from "./components/Todos";
+// import Projects from "./components/Projects";
 
 const App: () => JSX.Element = () => {
 
@@ -9,9 +10,11 @@ const App: () => JSX.Element = () => {
 
     <Fragment>
 
-      <Projects />
-      
+      {/* <Projects /> */}
+
       {/* <Todos /> */}
+
+      <Product />
 
     </Fragment>
 
