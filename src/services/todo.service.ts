@@ -4,7 +4,7 @@ import api from "./api"
 export const getTodosIds = async (): Promise<(number | undefined)[]> => {
 
     return (await api.get<ITodo[]>("todos")).data.map((todo) => todo.id);
-    
+
 }
 
 export const getTodo = async (id: number): Promise<ITodo> => {
@@ -22,5 +22,11 @@ export const createTodo = async (data: ITodo): Promise<void> => {
 export const updateTodo = async (data: ITodo): Promise<void> => {
 
     await api.put(`todos/${data.id}`, data);
-    
+
+}
+
+export const deleteTodo = async (id: number) => {
+
+    await api.delete(`todos/${id}`);
+
 }

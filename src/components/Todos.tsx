@@ -1,7 +1,7 @@
 import { Fragment } from "react/jsx-runtime";
 import { useTodos, useTodosIds } from "../services/todo.queries"
 import { useIsFetching } from "@tanstack/react-query";
-import { useCreateTodo, useUpdateTodo } from "../services/mutations";
+import { useCreateTodo, useDeleteTodo, useUpdateTodo } from "../services/mutations";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ITodo } from "../interface/todo";
 
@@ -13,12 +13,11 @@ export default function Todos() {
     }
 
     const todosIdQuery = useTodosIds();
-
     const todosQueries = useTodos(todosIdQuery.data);
 
     const createMutation = useCreateTodo();
-
     const updateTodoMutation = useUpdateTodo();
+    const deleteMutation = useDeleteTodo();
 
     const { handleSubmit, register } = useForm<ITodo>();
 
@@ -32,10 +31,17 @@ export default function Todos() {
 
     const handleMarkAsDoneSubmit = (data: ITodo | undefined) => {
 
-        if(data){
-            updateTodoMutation.mutate({...data, checked: true});
+        if (data) {
+            updateTodoMutation.mutate({ ...data, checked: true });
         }
 
+    }
+
+    const handleDeleteTodo = (id: number | undefined) => {
+        
+        if(id){
+            deleteMutation.mutate(id);
+        }
     }
 
     if (todosIdQuery.isPending) {
@@ -84,6 +90,7 @@ export default function Todos() {
                         <button onClick={() => handleMarkAsDoneSubmit(data)} disabled={data?.checked}>
                             {data?.checked ? "Done" : "Mark as done"}
                         </button>
+                        <button onClick={() => handleDeleteTodo(data?.id)}>Delete</button>
                     </li>
                 ))}
 
