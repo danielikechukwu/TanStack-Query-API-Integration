@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ITodo } from "../interface/todo";
-import { createTodo } from "./todo.service";
+import { createTodo, updateTodo } from "./todo.service";
+import { version } from "react";
 
 export function useCreateTodo() {
 
@@ -22,6 +23,7 @@ export function useCreateTodo() {
         },
 
         onSettled: async (_, error) => {
+
             console.log("Settled");
 
             if (error) {
@@ -33,4 +35,26 @@ export function useCreateTodo() {
 
         }
     })
+}
+
+export function useUpdateTodo() {
+
+    const queryClient = useQueryClient();
+
+    return useMutation({
+
+        mutationFn: (data: ITodo) => updateTodo(data),
+
+        onSettled: async (_, error, variable) => {
+
+            if(error){
+                console.log(error);
+            }
+            else {
+                await queryClient.invalidateQueries({ queryKey: ["todos"] });
+                await queryClient.invalidateQueries({ queryKey: ["todo", { id: variable.id}]});
+            }
+        }
+    })
+
 }

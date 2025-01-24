@@ -18,3 +18,9 @@ export const createTodo = async (data: ITodo): Promise<void> => {
     await api.post("todos", data);
 
 }
+
+export const updateTodo = async (data: ITodo): Promise<void> => {
+
+    await api.put(`todos/${data.id}`, data);
+    
+}

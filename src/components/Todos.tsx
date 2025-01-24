@@ -1,7 +1,7 @@
 import { Fragment } from "react/jsx-runtime";
 import { useTodos, useTodosIds } from "../services/todo.queries"
 import { useIsFetching } from "@tanstack/react-query";
-import { useCreateTodo } from "../services/mutations";
+import { useCreateTodo, useUpdateTodo } from "../services/mutations";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ITodo } from "../interface/todo";
 
@@ -18,6 +18,8 @@ export default function Todos() {
 
     const createMutation = useCreateTodo();
 
+    const updateTodoMutation = useUpdateTodo();
+
     const { handleSubmit, register } = useForm<ITodo>();
 
     // const isFetching = useIsFetching();
@@ -25,6 +27,14 @@ export default function Todos() {
     const handleCreateTodoSubmit: SubmitHandler<ITodo> = (data: ITodo) => {
 
         createMutation.mutate(data);
+
+    }
+
+    const handleMarkAsDoneSubmit = (data: ITodo | undefined) => {
+
+        if(data){
+            updateTodoMutation.mutate({...data, checked: true});
+        }
 
     }
 
@@ -71,6 +81,9 @@ export default function Todos() {
                             <strong>Title: </strong> {data?.title}, {" "}
                             <strong>Description: </strong> {data?.description}
                         </span>
+                        <button onClick={() => handleMarkAsDoneSubmit(data)} disabled={data?.checked}>
+                            {data?.checked ? "Done" : "Mark as done"}
+                        </button>
                     </li>
                 ))}
 
