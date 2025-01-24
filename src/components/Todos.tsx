@@ -24,7 +24,6 @@ export default function Todos() {
 
     const handleCreateTodoSubmit: SubmitHandler<ITodo> = (data: ITodo) => {
 
-        console.log(data);
         createMutation.mutate(data);
 
     }
@@ -59,7 +58,7 @@ export default function Todos() {
                 <input type="text" placeholder="Enter description" {...register("description")} />
                 <br />
 
-                <button type="submit">submit</button>
+                <button type="submit" disabled={createMutation.isPending}>{createMutation.isPending ? "Creating..." : "Add Todo"}</button>
 
             </form>
 
